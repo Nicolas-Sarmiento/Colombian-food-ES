@@ -1,0 +1,216 @@
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe Expert System</title>
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar-left">
+            <h2>Your Kitchen</h2>
+            <form action="/" method="POST">
+                
+                <h4>Select Your Ingredients:</h4>
+                {% for category, items in ingredients_data.items() %}
+                    <button type="button" class="collapsible-trigger">{{ category }}</button>
+                    <div class="collapsible-content">
+                        <div class="collapsible-inner-padding"> 
+                        <div class="button-group">
+                        {% for ingredient in items %}
+                            <input 
+                                type="checkbox" 
+                                name="ingredients" 
+                                value="{{ ingredient }}" 
+                                id="ing-{{ ingredient | replace(' ', '-') }}" 
+                                class="toggle-checkbox"
+                                {% if selected_data and ingredient in selected_data.get('ingredients', []) %}
+                                    checked
+                                {% endif %}
+                            >
+                            <label for="ing-{{ ingredient | replace(' ', '-') }}" class="toggle-button toggle-button--ingredient">
+                                {{ ingredient.capitalize() }}
+                            </label>
+                        {% endfor %}
+                        </div>
+                        </div>
+                    </div>
+                {% endfor %}
+
+                <hr>
+                <h4>Filters (Optional):</h4>
+                <label for="category">Recipe Category:</label>
+                <select name="category" id="category">
+                    <option value="" {% if selected_data.get('category') == '' %}selected{% endif %}>Any</option>
+                    <option value="breakfast" {% if selected_data.get('category') == 'breakfast' %}selected{% endif %}>Breakfast</option>
+                    <option value="lunch" {% if selected_data.get('category') == 'lunch' %}selected{% endif %}>Lunch</option>
+                    <option value="dessert" {% if selected_data.get('category') == 'dessert' %}selected{% endif %}>Dessert</option>
+                    <option value="beverage" {% if selected_data.get('category') == 'beverage' %}selected{% endif %}>Beverage</option>
+                </select>
+
+                <label for="time">Max Time (minutes):</label>
+                <input type="number" name="time" id="time" min="0" placeholder="e.g., 30" value="{{ selected_data.get('time', '') }}">
+
+                <hr>
+                
+                <div class="searchable-section">
+                    <button type="button" class="collapsible-trigger">Already Made Recipes (Optional)</button>
+                    <div class="collapsible-content">
+                        <div class="collapsible-inner-padding"> 
+                        <input type="search" id="recipe-search" placeholder="Filter recipes...">
+                        <div class="button-group" id="recipe-list">
+                            {% for recipe in all_recipes %}
+                                <div class="recipe-item"> <input 
+                                        type="checkbox" 
+                                        name="made_recipes" 
+                                        value="{{ recipe.strip() }}" 
+                                        id="recipe-{{ loop.index }}" 
+                                        class="toggle-checkbox"
+                                        {% if recipe.strip() in selected_data.made_recipes %}
+                                            checked
+                                        {% endif %}
+                                    >
+                                    <label for="recipe-{{ loop.index }}" class="toggle-button toggle-button--recipe">
+                                        {{ recipe.strip() }}
+                                    </label>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 8px;">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                    Find Recipes
+                </button>
+            </form>
+        </aside>
+
+        <main class="content">
+            <h2>Results</h2>
+            {% if results %}
+                <div class="results-section">
+                    <h3>Recipes You Can Prepare</h3>
+                    {% if results.new_recipes %}
+                        <ul>
+                        {% for recipe in results.new_recipes %}
+                            <li><a href="#" class="recipe-link" data-recipe-name="{{ recipe }}">{{ recipe }}</a></li>
+                        {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p>No new recipes can be fully prepared with the selected items.</p>
+                    {% endif %}
+                </div>
+                <div class="results-section">
+                    <h3>Recipes You Can Almost Prepare</h3>
+                    {% if results.nearly_possible %}
+                        <ul>
+                        {% for recipe, missing in results.nearly_possible.items() %}
+                            <li>
+                                <a href="#" class="recipe-link" data-recipe-name="{{ recipe }}">{{ recipe }}</a>
+                                <small>(Missing: {{ missing }})</small>
+                            </li>
+                        {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p>No other suggestions found.</p>
+                    {% endif %}
+                </div>
+            {% else %}
+                <p>Select your ingredients and click "Find Recipes" to see the results.</p>
+            {% endif %}
+        </main>
+
+        <aside class="sidebar-right" id="recipe-details-panel">
+            <h2>Recipe Details</h2>
+            <div id="details-content">
+                <p>Click on a recipe from the results to see its details here.</p>
+            </div>
+        </aside>
+    </div>
+
+    <script>
+        // JavaScript para hacer la barra derecha interactiva
+        document.addEventListener('click', function(event) {
+            if (event.target.classList.contains('recipe-link')) {
+                event.preventDefault();
+                const recipeName = event.target.dataset.recipeName;
+                const detailsContent = document.getElementById('details-content');
+                detailsContent.innerHTML = '<p>Loading...</p>';
+
+                fetch(`/recipe_details/${recipeName}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.error) {
+                            detailsContent.innerHTML = `<p>${data.error}</p>`;
+                        } else {
+                            let ingredientsHtml = '<ul>';
+                            data.full_ingredients.forEach(ing => {
+                                ingredientsHtml += `<li>${ing}</li>`;
+                            });
+                            ingredientsHtml += '</ul>';
+
+                            let instructionsHtml = '<ol>';
+                            data.instructions.forEach(step => {
+                                instructionsHtml += `<li>${step}</li>`;
+                            });
+                            instructionsHtml += '</ol>';
+
+                            detailsContent.innerHTML = `
+                                <h3>${recipeName}</h3>
+                                <p><em>${data.description}</em></p>
+                                <h4>Ingredients</h4>
+                                ${ingredientsHtml}
+                                <h4>Instructions</h4>
+                                ${instructionsHtml}
+                            `;
+                        }
+                    })
+                    .catch(error => {
+                        detailsContent.innerHTML = '<p>Could not fetch recipe details.</p>';
+                        console.error('Error:', error);
+                    });
+            }
+        });
+        document.addEventListener('DOMContentLoaded', function() {
+            // Lógica para las secciones colapsables (Acordeón)
+            const triggers = document.querySelectorAll('.collapsible-trigger');
+            triggers.forEach(trigger => {
+                trigger.addEventListener('click', function() {
+                    this.classList.toggle('active');
+                    const content = this.nextElementSibling;
+                    if (content.style.maxHeight) {
+                        content.style.maxHeight = null;
+                    } else {
+                        content.style.maxHeight = content.scrollHeight + "px";
+                    }
+                });
+            });
+
+            // Lógica para el buscador de recetas
+            const searchInput = document.getElementById('recipe-search');
+            const recipeItems = document.querySelectorAll('#recipe-list .recipe-item');
+
+            searchInput.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase().trim();
+
+                recipeItems.forEach(item => {
+                    const recipeLabel = item.querySelector('.toggle-button toggle-button--recipe');
+                    const recipeName = recipeLabel.textContent.toLowerCase();
+
+                    if (recipeName.includes(searchTerm)) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
