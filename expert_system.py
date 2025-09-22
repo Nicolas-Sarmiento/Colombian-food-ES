@@ -146,9 +146,9 @@ def find_recipes(ingredients, made_recipes=None, category=None, time=None):
                     if missing_message:
                        nearly_possible_filtered[recipe] = ' and '.join(missing_message)
 
-    # 2. Limitamos el número de resultados a 4 si hay demasiados
+    
     if len(nearly_possible_filtered) > 4:
-        # **NUEVO**: Convertimos el diccionario a una lista, la cortamos y la volvemos a convertir en diccionario
+        
         nearly_possible_filtered = dict(list(nearly_possible_filtered.items())[:4])
     
     

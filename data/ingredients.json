@@ -1,17 +1,17 @@
 {
   "Meats & Proteins": [
-    "chicken", "hen", "beef", "pork", "ground beef", "pork ribs", "fish", "shrimp", "egg", "chicharrón", "chorizo", "morcilla", "longaniza", "sobrebarriga", "posta", "carne oreada", "capón"
+    "chicken", "hen", "beef", "pork", "ground beef", "pork ribs", "fish", "shrimp", "egg", "trucha", "chicharrón", "chorizo", "morcilla", "longaniza", "sobrebarriga", "posta", "carne oreada", "capón"
   ],
   "Fruits & Vegetables": [
-    "papa criolla", "papa pastusa", "yuca", "plátano verde", "plátano maduro", "ñame", "arracacha", "mazorca", "tomato", "cebolla larga", "onion", "garlic", "bell pepper", "coriander", "avocado", "lime", "lulo", "maracuyá", "blackberry", "uchuva", "curuba", "tomate de árbol", "guayaba", "mango", "papaya", "banana", "strawberry", "lettuce", "cucumber", "carrot", "spinach", "ahuyama", "calabacín"
+    "papa criolla", "papa pastusa", "yuca", "plátano verde", "nabos","hibias","cubios","chuguas","habas","acelga", "plátano maduro", "ñame", "arracacha", "mazorca", "tomato", "cebolla larga", "onion", "garlic", "bell pepper", "coriander", "avocado", "lime", "lulo", "maracuyá", "blackberry", "uchuva", "curuba", "tomate de árbol", "guayaba", "mango", "papaya", "banana", "strawberry", "lettuce", "cucumber", "carrot", "spinach", "ahuyama", "calabacín"
   ],
   "Dairy": [
-    "cheese", "queso costeño", "queso campesino", "queso doble crema", "queso pera", "cuajada", "heavy cream", "milk", "suero costeño"
+    "cheese", "queso costeño","mantequilla",  "queso campesino", "queso doble crema", "queso pera", "cuajada", "heavy cream", "milk", "suero costeño"
   ],
   "Grains & Pantry": [
     "fríjoles", "lentejas", "garbanzos", "arveja", "arroz", "harina de maíz", "harina de trigo", "harina de yuca", "oil", "salt", "sugar", "panela", "cumin", "annatto powder", "alcaparras", "coconut milk", "coffee", "chocolate", "arequipe", "bocadillo", "gelatin", "potato chips", "bread", "pasta", "canned tuna"
   ],
   "Herbs, Spices & Others": [
-    "guascas", "bay leaf", "thyme", "cinnamon", "cloves", "achiote", "poleo", "orégano", "ice", "leche condensada", "brandy", "aguardiente"
+    "guascas", "cilantro", "bay leaf", "thyme", "cinnamon", "cloves", "achiote", "poleo", "orégano", "ice", "leche condensada", "brandy", "aguardiente", "vino dulce","yemas de huevo","leche en polvo"
   ]
 }

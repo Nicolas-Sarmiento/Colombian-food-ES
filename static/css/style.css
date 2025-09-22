@@ -4,21 +4,20 @@
 
 :root {
     /* Colors */
-    --color-primary: #3498db;
-    --color-primary-dark: #2980b9;
-    --color-secondary: #2ecc71;
-    --color-secondary-dark: #27ae60;
-    --color-background: #f4f4f9;
+    --color-primary: #003893;
+    --color-primary-dark: #002c7a;
+    --color-secondary: #fcd116; /* Amarillo de la bandera */
+    --color-secondary-dark: #e9b204;
+    --color-background: #f8f5f0; /* Un blanco cálido */
     --color-surface: #ffffff;
-    --color-text-primary: #2c3e50;
+    --color-text-primary: #222730; /* Un negro azulado oscuro */
     --color-text-secondary: #333;
-    --color-border: #dddddd;
-    --color-subtle-background: #ecf0f1;
+    --color-border: #e0e0e0;
+    --color-subtle-background: #f0f0f0;
 
-    /* Fonts */
     --font-family-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 
-    /* Spacing & Radius */
+
     --spacing-md: 20px;
     --border-radius-sm: 4px;
     --border-radius-md: 8px;

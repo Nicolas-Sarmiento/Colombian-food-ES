@@ -9,7 +9,7 @@
 <body>
     <div class="container">
         <aside class="sidebar-left">
-            <h2>Your Kitchen</h2>
+            <h2>Colombian Cuisine</h2>
             <form action="/" method="POST">
                 
                 <h4>Select Your Ingredients:</h4>
@@ -58,7 +58,6 @@
                     <button type="button" class="collapsible-trigger">Already Made Recipes (Optional)</button>
                     <div class="collapsible-content">
                         <div class="collapsible-inner-padding"> 
-                        <input type="search" id="recipe-search" placeholder="Filter recipes...">
                         <div class="button-group" id="recipe-list">
                             {% for recipe in all_recipes %}
                                 <div class="recipe-item"> <input 
