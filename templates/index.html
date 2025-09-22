@@ -134,7 +134,7 @@
     </div>
 
     <script>
-        // JavaScript para hacer la barra derecha interactiva
+        
         document.addEventListener('click', function(event) {
             if (event.target.classList.contains('recipe-link')) {
                 event.preventDefault();
@@ -177,7 +177,7 @@
             }
         });
         document.addEventListener('DOMContentLoaded', function() {
-            // Lógica para las secciones colapsables (Acordeón)
+            
             const triggers = document.querySelectorAll('.collapsible-trigger');
             triggers.forEach(trigger => {
                 trigger.addEventListener('click', function() {
@@ -191,7 +191,7 @@
                 });
             });
 
-            // Lógica para el buscador de recetas
+            
             const searchInput = document.getElementById('recipe-search');
             const recipeItems = document.querySelectorAll('#recipe-list .recipe-item');
 

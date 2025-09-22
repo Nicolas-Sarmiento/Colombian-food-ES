@@ -79,7 +79,7 @@ h2, h3, h4 {
 .sidebar-left form input {
     display: block;
     width: 100%;
-    box-sizing: border-box; /* Incluye padding en el ancho total */
+    box-sizing: border-box; 
 }
 
 .sidebar-left form select,
@@ -145,7 +145,7 @@ form button[type="submit"]:active {
     margin-bottom: var(--spacing-md);
 }
 
-/* Modificador de color para Ingredientes */
+
 .toggle-button--ingredient {
     background-color: #ecf0f1;
     color: #34495e;
@@ -160,7 +160,7 @@ form button[type="submit"]:active {
     border-color: var(--color-primary);
 }
 
-/* Modificador de color para Recetas */
+
 .toggle-button--recipe {
     background-color: #e8f6ef;
     color: #16a085;
@@ -212,7 +212,7 @@ form button[type="submit"]:active {
 .collapsible-inner-padding {
     padding: 18px;
 }
-h4 + .collapsible-trigger { /* Remove border for first trigger */
+h4 + .collapsible-trigger { 
     border-top: none;
 }
 

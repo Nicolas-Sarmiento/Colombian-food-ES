@@ -1,7 +1,7 @@
 import json
 from experta import *
 
-# --- Definition of the Facts used by the system ---
+
 
 class Condition(Fact):
     """Fact to represent any condition of a recipe."""
@@ -15,7 +15,7 @@ class SuggestedRecipe(Fact):
     """Fact to store recipes that can be prepared."""
     pass
 
-# --- Expert System Engine ---
+
 
 class RecipeEngine(KnowledgeEngine):
     def __init__(self, rules_path):
@@ -46,8 +46,8 @@ class RecipeEngine(KnowledgeEngine):
                 else: 
                     self.declare(Condition(recipe=name, type=type, value=value))
 
-    # Main rule that checks if a recipe can be prepared
-    @Rule(salience=1) # Higher priority to execute first
+    
+    @Rule(salience=1) 
     def can_prepare_recipe(self):
         """
         This rule is dynamic. It iterates over all recipes and checks if all
@@ -64,7 +64,7 @@ class RecipeEngine(KnowledgeEngine):
         for recipe in self.rules:
             recipe_name = recipe['name']
             if recipe_name in self.possible_recipes:
-                continue # We already know this one can be made
+                continue 
 
             conditions = recipe['conditions']
             missing = {'ingredients': [], 'recipes': []}
@@ -77,19 +77,19 @@ class RecipeEngine(KnowledgeEngine):
                         is_met = False
                         missing['ingredients'].append(ing)
             
-            # 2. Validate sub-recipes
+           
             if 'recipes' in conditions:
                 for sub_recipe in conditions['recipes']:
                     if sub_recipe not in self.possible_recipes and sub_recipe not in prepared_recipes:
                         is_met = False
                         missing['recipes'].append(sub_recipe)
 
-            # 3. Validate time (optional)
+            
             if available_time and 'time' in conditions:
                 if conditions['time'] > available_time:
                     is_met = False
             
-            # 4. Validate category (optional)
+            
             if desired_category and 'category' in conditions:
                 if conditions['category'] != desired_category:
                     is_met = False
@@ -108,10 +108,9 @@ def find_recipes(ingredients, made_recipes=None, category=None, time=None):
     """
     Initializes the engine, declares initial facts, and RETURNS the results.
     """
-    engine = RecipeEngine('data/rules.json') # Asegúrate que la ruta sea correcta
+    engine = RecipeEngine('data/rules.json')
     engine.reset()
 
-    # ... (El código para declarar hechos es el mismo) ...
     for ingredient in ingredients:
         engine.declare(Ingredient(name=ingredient))
     if made_recipes:
